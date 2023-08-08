@@ -9,6 +9,8 @@ import com.wanted.wantedpreonboardingbackend.exception.ErrorCode;
 import com.wanted.wantedpreonboardingbackend.repository.BoardRepository;
 import com.wanted.wantedpreonboardingbackend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -32,6 +34,13 @@ public class BoardService {
 
         Board savedBoard = boardRepository.save(newBoard);
         return BoardDto.of(savedBoard);
+    }
+
+    public Page<BoardDto> list(Pageable pageable) {
+        Page<Board> boardPage = boardRepository.findAll(pageable);
+
+        // Page<Board> -> Page<BoardDto>로 변환 후 return
+        return boardPage.map(board -> BoardDto.of(board));
     }
 
     private static void validation(String title, String body) {
