@@ -27,4 +27,9 @@ public class BoardRestController {
     public ResponseEntity list(@PageableDefault(size = 10, sort = "createdAt", direction = Sort.Direction.DESC)Pageable pageable) {
         return Response.success(boardService.list(pageable));
     }
+
+    @GetMapping("/{boardId}")
+    public ResponseEntity detail(@PathVariable Long boardId) {
+        return Response.success(boardService.detail(boardId));
+    }
 }

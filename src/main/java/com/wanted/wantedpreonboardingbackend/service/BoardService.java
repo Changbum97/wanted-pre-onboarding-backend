@@ -43,6 +43,12 @@ public class BoardService {
         return boardPage.map(board -> BoardDto.of(board));
     }
 
+    public BoardDto detail(Long boardId) {
+        Board board = boardRepository.findById(boardId)
+                .orElseThrow(() -> new CustomException(ErrorCode.BAD_REQUEST, "게시글이 존재하지 않습니다."));
+        return BoardDto.of(board);
+    }
+
     private static void validation(String title, String body) {
         if (title == null || title.equals("")) {
             throw new CustomException(ErrorCode.BAD_REQUEST, "제목을 입력해주세요.");
