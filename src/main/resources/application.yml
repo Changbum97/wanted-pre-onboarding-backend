@@ -1,7 +1,9 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    # DB ?? ??? ????? ??
+    url: jdbc:mysql://aws-freetier.cjjpwgrapvvh.ap-northeast-2.rds.amazonaws.com:3306/wanted
+    username: root
+    # password? ????? ??
 
   jpa:
     show-sql: true
