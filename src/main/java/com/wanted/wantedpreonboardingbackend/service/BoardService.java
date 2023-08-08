@@ -45,7 +45,6 @@ public class BoardService {
         return BoardDto.of(board);
     }
 
-    @Transactional
     public BoardDto edit(Long boardId, BoardRequest req, String userEmail) {
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(() -> new CustomException(ErrorCode.BAD_REQUEST, "게시글이 존재하지 않습니다."));
@@ -60,8 +59,9 @@ public class BoardService {
         }
 
         board.update(req.getTitle(), req.getBody());
+        Board editedBoard = boardRepository.save(board);
 
-        return BoardDto.of(board);
+        return BoardDto.of(editedBoard);
     }
 
     public String delete(Long boardId, String userEmail) {
