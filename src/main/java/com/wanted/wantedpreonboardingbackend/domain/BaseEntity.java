@@ -1,4 +1,4 @@
-package com.study.basicboard.domain;
+package com.wanted.wantedpreonboardingbackend.domain;
 
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;

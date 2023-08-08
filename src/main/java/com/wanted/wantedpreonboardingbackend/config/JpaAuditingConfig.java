@@ -1,4 +1,4 @@
-package com.study.basicboard.config;
+package com.wanted.wantedpreonboardingbackend.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
