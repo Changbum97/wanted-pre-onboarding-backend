@@ -1,6 +1,6 @@
 package com.wanted.wantedpreonboardingbackend.exception;
 
-import com.nts.ntsanchangbum.domain.Response;
+import com.wanted.wantedpreonboardingbackend.domain.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
