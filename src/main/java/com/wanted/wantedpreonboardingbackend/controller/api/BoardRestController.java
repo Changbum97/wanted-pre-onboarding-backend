@@ -37,4 +37,9 @@ public class BoardRestController {
     public ResponseEntity edit(@PathVariable Long boardId, @RequestBody BoardRequest req, Authentication auth) {
         return Response.success(boardService.edit(boardId, req, auth.getName()));
     }
+
+    @DeleteMapping("/{boardId}")
+    public ResponseEntity delete(@PathVariable Long boardId, Authentication auth) {
+        return Response.success(boardService.delete(boardId, auth.getName()));
+    }
 }

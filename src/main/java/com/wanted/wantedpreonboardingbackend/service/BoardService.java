@@ -64,6 +64,21 @@ public class BoardService {
         return BoardDto.of(board);
     }
 
+    public String delete(Long boardId, String userEmail) {
+        Board board = boardRepository.findById(boardId)
+                .orElseThrow(() -> new CustomException(ErrorCode.BAD_REQUEST, "게시글이 존재하지 않습니다."));
+
+        User loginUser = userRepository.findByEmail(userEmail)
+                .orElseThrow(() -> new CustomException(ErrorCode.BAD_REQUEST, "유저가 존재하지 않습니다."));
+
+        if (!board.getUser().equals(loginUser)) {
+            throw new CustomException(ErrorCode.INVALID_PERMISSION, "본인이 작성한 게시글만 삭제 가능합니다.");
+        }
+
+        boardRepository.delete(board);
+        return board.getId() + "번 글이 삭제되었습니다.";
+    }
+
     private static void validation(String title, String body) {
         if (title == null || title.equals("")) {
             throw new CustomException(ErrorCode.BAD_REQUEST, "제목을 입력해주세요.");
