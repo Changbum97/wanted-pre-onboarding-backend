@@ -9,3 +9,9 @@ spring:
     database: mysql
     hibernate:
       ddl-auto: create
+
+# Jwt Token ?? ??
+jwt:
+  token:
+    access-token-duration: 1800   # 30? = 1800?
+    # secret key? ????? ??

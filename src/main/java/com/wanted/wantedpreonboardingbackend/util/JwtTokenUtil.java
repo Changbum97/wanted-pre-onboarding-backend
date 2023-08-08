@@ -1,4 +1,5 @@
-package study.sns.util;
+package com.wanted.wantedpreonboardingbackend.util;
+
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -10,11 +11,11 @@ import java.util.Date;
 public class JwtTokenUtil {
 
     // JWT Token 발급
-    public static String createToken(String loginId, String key, long expireTimeMs) {
+    public static String createToken(String email, String key, long expireTimeMs) {
 
         // Claim(일종의 Map, loginId를 넣어줌으로써 나중에 Token으로 loginId를 꺼낼 수 있음
         Claims claims = Jwts.claims();
-        claims.put("loginId", loginId);
+        claims.put("email", email);
 
         return Jwts.builder()
                 .setClaims(claims)
@@ -24,10 +25,10 @@ public class JwtTokenUtil {
                 .compact();
     }
 
-    // Claims에서 loginId 꺼내기
-    public static String getLoginId(String token, String secretKey) {
+    // Claims에서 email 꺼내기
+    public static String getEmail(String token, String secretKey) {
         try {
-            return extractClaims(token, secretKey).get("loginId").toString();
+            return extractClaims(token, secretKey).get("email").toString();
         } catch (NullPointerException e) {
             return null;
         }
