@@ -10,8 +10,12 @@ spring:
     hibernate:
       ddl-auto: update
 
-# Jwt Token ?? ??
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+# Jwt Token ??
 jwt:
   token:
-    access-token-duration: 1800   # 30? = 1800?
+    access-token-duration: 1800   # 1800? = 30?
     # secret key? ????? ??
