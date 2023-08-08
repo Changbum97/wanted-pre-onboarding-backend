@@ -1,7 +1,7 @@
 package com.wanted.wantedpreonboardingbackend.controller.api;
 
 import com.wanted.wantedpreonboardingbackend.domain.Response;
-import com.wanted.wantedpreonboardingbackend.domain.dto.board.BoardCreateRequest;
+import com.wanted.wantedpreonboardingbackend.domain.dto.board.BoardRequest;
 import com.wanted.wantedpreonboardingbackend.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -19,7 +19,7 @@ public class BoardRestController {
     private final BoardService boardService;
 
     @PostMapping
-    public ResponseEntity save(@RequestBody BoardCreateRequest req, Authentication auth) {
+    public ResponseEntity save(@RequestBody BoardRequest req, Authentication auth) {
         return Response.success(boardService.save(req, auth.getName()));
     }
 
@@ -31,5 +31,10 @@ public class BoardRestController {
     @GetMapping("/{boardId}")
     public ResponseEntity detail(@PathVariable Long boardId) {
         return Response.success(boardService.detail(boardId));
+    }
+
+    @PutMapping("/{boardId}")
+    public ResponseEntity edit(@PathVariable Long boardId, @RequestBody BoardRequest req, Authentication auth) {
+        return Response.success(boardService.edit(boardId, req, auth.getName()));
     }
 }

@@ -9,7 +9,7 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class BoardCreateRequest {
+public class BoardRequest {
 
     private String title;
     private String body;

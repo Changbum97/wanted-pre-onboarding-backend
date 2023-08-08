@@ -23,4 +23,9 @@ public class Board extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
+
+    public void update(String newTitle, String newBody) {
+        this.title = newTitle;
+        this.body = newBody;
+    }
 }

@@ -51,6 +51,7 @@ public class SecurityConfig {
                 .and()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/api/boards").authenticated()
+                .antMatchers(HttpMethod.PUT, "/api/boards/**").authenticated()
                 .anyRequest().permitAll()
                 .and()
                 .sessionManagement()
@@ -68,7 +69,7 @@ public class SecurityConfig {
                         response.setStatus(errorCode.getStatus().value());
                         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
                         ObjectMapper objectMapper = new ObjectMapper();
-                        objectMapper.writeValue(response.getWriter(), Response.error(new CustomException(errorCode)).getBody());
+                        objectMapper.writeValue(response.getWriter(), Response.error(new CustomException(errorCode, "로그인이 필요한 기능입니다.")).getBody());
                     }
                 })
                 .and()

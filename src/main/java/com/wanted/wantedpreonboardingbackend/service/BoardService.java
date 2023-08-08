@@ -1,6 +1,6 @@
 package com.wanted.wantedpreonboardingbackend.service;
 
-import com.wanted.wantedpreonboardingbackend.domain.dto.board.BoardCreateRequest;
+import com.wanted.wantedpreonboardingbackend.domain.dto.board.BoardRequest;
 import com.wanted.wantedpreonboardingbackend.domain.dto.board.BoardDto;
 import com.wanted.wantedpreonboardingbackend.domain.entity.Board;
 import com.wanted.wantedpreonboardingbackend.domain.entity.User;
@@ -13,6 +13,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service
 @RequiredArgsConstructor
 public class BoardService {
@@ -20,19 +22,13 @@ public class BoardService {
     private final BoardRepository boardRepository;
     private final UserRepository userRepository;
 
-    public BoardDto save(BoardCreateRequest req, String userEmail) {
+    public BoardDto save(BoardRequest req, String userEmail) {
         User loginUser = userRepository.findByEmail(userEmail)
                 .orElseThrow(() -> new CustomException(ErrorCode.BAD_REQUEST, "유저가 존재하지 않습니다."));
 
         validation(req.getTitle(), req.getBody());
 
-        Board newBoard = Board.builder()
-                .user(loginUser)
-                .title(req.getTitle())
-                .body(req.getBody())
-                .build();
-
-        Board savedBoard = boardRepository.save(newBoard);
+        Board savedBoard = boardRepository.save(req.toEntity(loginUser));
         return BoardDto.of(savedBoard);
     }
 
@@ -46,6 +42,25 @@ public class BoardService {
     public BoardDto detail(Long boardId) {
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(() -> new CustomException(ErrorCode.BAD_REQUEST, "게시글이 존재하지 않습니다."));
+        return BoardDto.of(board);
+    }
+
+    @Transactional
+    public BoardDto edit(Long boardId, BoardRequest req, String userEmail) {
+        Board board = boardRepository.findById(boardId)
+                .orElseThrow(() -> new CustomException(ErrorCode.BAD_REQUEST, "게시글이 존재하지 않습니다."));
+
+        validation(req.getTitle(), req.getBody());
+
+        User loginUser = userRepository.findByEmail(userEmail)
+                .orElseThrow(() -> new CustomException(ErrorCode.BAD_REQUEST, "유저가 존재하지 않습니다."));
+
+        if (!board.getUser().equals(loginUser)) {
+            throw new CustomException(ErrorCode.INVALID_PERMISSION, "본인이 작성한 게시글만 수정 가능합니다.");
+        }
+
+        board.update(req.getTitle(), req.getBody());
+
         return BoardDto.of(board);
     }
 
