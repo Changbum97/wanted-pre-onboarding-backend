@@ -56,13 +56,13 @@ public class UserService {
 
     private static void validation(String email, String password) {
         if (email == null || email.equals("")) {
-            throw new CustomException(ErrorCode.BAD_REQUEST, "이메일을 입력해주세요.");
+            throw new CustomException(ErrorCode.BAD_REQUEST, "이메일은 비어있을 수 없습니다.");
         }
         if (!email.contains("@")) {
             throw new CustomException(ErrorCode.BAD_REQUEST, "이메일 형식이 아닙니다.");
         }
         if (password == null || password.equals("")) {
-            throw new CustomException(ErrorCode.BAD_REQUEST, "비밀번호를 입력해주세요.");
+            throw new CustomException(ErrorCode.BAD_REQUEST, "비밀번호는 비어있을 수 없습니다.");
         }
         if (password.length() < 8) {
             throw new CustomException(ErrorCode.BAD_REQUEST, "비밀번호는 8자 이상이여야 합니다.");

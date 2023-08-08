@@ -81,10 +81,10 @@ public class BoardService {
 
     private static void validation(String title, String body) {
         if (title == null || title.equals("")) {
-            throw new CustomException(ErrorCode.BAD_REQUEST, "제목을 입력해주세요.");
+            throw new CustomException(ErrorCode.BAD_REQUEST, "제목은 비어있을 수 없습니다.");
         }
         if (body == null || body.equals("")) {
-            throw new CustomException(ErrorCode.BAD_REQUEST, "내용을 입력해주세요.");
+            throw new CustomException(ErrorCode.BAD_REQUEST, "내용은 비어있을 수 없습니다.");
         }
     }
 }
