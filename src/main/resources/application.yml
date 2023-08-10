@@ -3,7 +3,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://aws-freetier.cjjpwgrapvvh.ap-northeast-2.rds.amazonaws.com:3306/wanted
     username: root
-    # password? ????? ??
+    # password는 환경변수로 설정
 
   jpa:
     show-sql: true
@@ -16,8 +16,8 @@ spring:
     pathmatch:
       matching-strategy: ant_path_matcher
 
-# Jwt Token ??
+# Jwt Token 관련
 jwt:
   token:
-    access-token-duration: 1800   # 1800? = 30?
-    # secret key? ????? ??
+    access-token-duration: 1800   # 1800초 = 30분
+    # secret key는 환경변수로 설정
