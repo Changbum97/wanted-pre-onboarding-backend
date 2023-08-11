@@ -19,7 +19,7 @@ public class UserRestController {
     private final UserService userService;
 
     @PostMapping("/join")
-    @ApiOperation(value = "회원가입 API", notes = "email, password로 회원가입 할 수 있습니다.<br/>email은 Null일 수 없고, @가 포함되야 합니다.<br/>password는 Null일 수 없고, 8자 이상이여야 합니다.")
+    @ApiOperation(value = "회원가입 API", notes = "email, password로 회원가입 할 수 있습니다.<br/>email은 중복될 수 없습니다.<br/>email은 Null일 수 없고, @가 포함되야 합니다.<br/>password는 Null일 수 없고, 8자 이상이여야 합니다.")
     public ResponseEntity save(@RequestBody UserCreateRequest req) {
         return Response.success(userService.save(req));
     }
