@@ -29,6 +29,10 @@ public class UserService {
     public UserDto save(UserCreateRequest req) {
         validation(req.getEmail(), req.getPassword());
 
+        if (userRepository.existsByEmail(req.getEmail())) {
+            throw new CustomException(ErrorCode.BAD_REQUEST, "이메일이 중복됩니다.");
+        }
+
         String encodedPassword = encoder.encode(req.getPassword());
         User savedUser = userRepository.save( req.toEntity(encodedPassword) );
         return UserDto.of(savedUser);
